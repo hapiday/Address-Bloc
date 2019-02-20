@@ -9,6 +9,7 @@ const inquirer = require('inquirer');
   message: "Please choose from an option below: ",
   choices: [
     "Add new contact",
+    "Date",
     "Exit"
      ]
    }
@@ -24,6 +25,8 @@ const inquirer = require('inquirer');
       break;
       case "Exit":
     this.exit();
+      case "Date":
+    this.getDate();
       default:
     console.log("Invalid input");
      this.main();
@@ -41,8 +44,18 @@ const inquirer = require('inquirer');
      console.log('addContact called');
      this.main();
 }
+   getDate(){
+     const now = new Date();
+     const year = now.getFullYear();
+     const month = now.getMonth() + 1;
+     const day = now.getDate();
+     const hour = now.getHours();
+     const minutes = now.getMinutes();
+     const fullYear = [year, month, day].join('-');
+     const fullTime = [hour, minutes].join(':');
+     console.log(fullYear, fullTime);
+}
 
-  
   exit(){
     console.log("Thanks for using AddressBloc!");
     process.exit();
