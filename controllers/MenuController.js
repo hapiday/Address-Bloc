@@ -44,6 +44,9 @@ const inquirer = require('inquirer');
      console.log('addContact called');
      this.main();
 }
+   remindMe() {
+     return "Learning is a life-long pursuit";
+}
    getDate(){
      const now = new Date();
      const year = now.getFullYear();
@@ -54,6 +57,9 @@ const inquirer = require('inquirer');
      const fullYear = [year, month, day].join('-');
      const fullTime = [hour, minutes].join(':');
      console.log(fullYear, fullTime);
+}
+    getContactCount(){
+     return this.contacts.length;
 }
 
   exit(){
