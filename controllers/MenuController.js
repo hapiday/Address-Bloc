@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const ContactController = require("./ContactController");
 
  module.exports = class MenuController {
-  constructor() {
+  constructor(){
     this.mainMenuQuestions = [
       {
         type: "list",
@@ -17,17 +17,22 @@ const ContactController = require("./ContactController");
     ];
      this.book = new ContactController();
 }
-  main() {
+  main(){
      console.log(`Welcome to AddressBloc!`);
      inquirer.prompt(this.mainMenuQuestions).then((response) => {
       switch(response.mainMenuChoice){
+
         case "Add new contact":
           this.addContact();
-        break;
-        case "Exit":
-          this.exit();
+          break;
+
         case "Date":
           this.getDate();
+          break;
+
+        case "Exit":
+            this.exit();
+
         default:
           console.log("Invalid input");
           this.main();
@@ -42,20 +47,26 @@ const ContactController = require("./ContactController");
      }
       addContact(){
           this.clear();
-          console.log('addContact called');
-          this.main();
-        }
-      exit(){
-          console.log("Thanks for using AddressBloc!");
-          process.exit();
-        }
+          inquirer.prompt(this.book.addContactQuestions).then((answers) => {
+            this.book.addContact(answers.name, answers.phone, answers.email).then((contact) => {
+            console.log("Contact added successfully!");
+            this.main();
+            }).catch((err) => {
+            console.log(err);
+            this.main();
+                });
+            });
+          }
+
       getContactCount(){
           return this.contacts.length;
       }
+      
       remindMe(){
           return "Learning is a life-long pursuit";
       }
       getDate(){
+          this.clear();
           const now = new Date();
           const year = now.getFullYear();
           const month = now.getMonth() + 1;
@@ -65,5 +76,10 @@ const ContactController = require("./ContactController");
           const fullYear = [year, month, day].join('-');
           const fullTime = [hour, minutes].join(':');
          console.log(fullYear, fullTime);
+         this.main();
       }
+      exit() {
+          console.log("Thanks for using AddressBloc!");
+          process.exit();
+        }
   }
