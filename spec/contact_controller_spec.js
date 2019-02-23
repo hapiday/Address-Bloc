@@ -11,12 +11,14 @@ describe("ContactController", () => {
         done();
      });
   });
+
   describe("#addContact()", () => {
         it("should add a single contact into the book", (done) => {
-          this.book.addContact("Alice", "001-101-1010")
+          this.book.addContact("Alice", "001-101-1010", "alice@example.com")
        .then((contact) => {
          expect(contact.name).toBe("Alice");
          expect(contact.phone).toBe("001-101-1010");
+         expect(contact.email).toBe("alice@example.com");
          done();
       })
       .catch((err) => {
@@ -24,7 +26,7 @@ describe("ContactController", () => {
       });
      });
    });
-  it("should be defined", () => {
+   it("should be defined", () => {
        expect(ContactController).toBeDefined();
-  });
-});
+   });
+ });
